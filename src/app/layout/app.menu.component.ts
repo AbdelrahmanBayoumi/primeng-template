@@ -16,6 +16,22 @@ export class AppMenuComponent implements OnInit {
         label: 'Home',
         items: [
           { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+          {
+            label: 'Auth',
+            icon: 'pi pi-fw pi-user',
+            items: [
+              {
+                label: 'Add User',
+                icon: 'pi pi-fw pi-user-plus',
+                routerLink: ['/demo/auth/add-user'],
+              },
+              {
+                label: 'Users List',
+                icon: 'pi pi-fw pi-users',
+                routerLink: ['/demo/auth/users-list'],
+              },
+            ],
+          },
         ],
       },
       {
@@ -24,13 +40,19 @@ export class AppMenuComponent implements OnInit {
           {
             label: 'To-Do List App',
             icon: 'pi pi-fw pi-check-square',
-            routerLink: ['/todo'],
+            routerLink: ['/demo/todo'],
+          },
+          {
+            label: 'Table Demo',
+            icon: 'pi pi-fw pi-table',
+            routerLink: ['/demo/table'],
           },
           {
             label: 'Empty',
             icon: 'pi pi-fw pi-circle-off',
-            routerLink: ['/empty'],
+            routerLink: ['/demo/empty'],
           },
+
           // {
           //   label: 'Form Layout',
           //   icon: 'pi pi-fw pi-id-card',
