@@ -13,7 +13,7 @@ export const USERS: User[] = [
     email: 'kuda842fg8a@example.com',
     photoURL: 'https://picsum.photos/500?random=47',
     displayName: 'kuda842fg8a',
-    role: Role.EDITOR,
+    role: Role.ADMIN,
   },
   {
     uid: 's5j1flxlg6',
@@ -34,7 +34,7 @@ export const USERS: User[] = [
     email: 'xft6akox6yk@example.com',
     photoURL: 'https://picsum.photos/500?random=93',
     displayName: 'xft6akox6yk',
-    role: Role.EDITOR,
+    role: Role.ADMIN,
   },
   {
     uid: 'ls8rkppqb09',

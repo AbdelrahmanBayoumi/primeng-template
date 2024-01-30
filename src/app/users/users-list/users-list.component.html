@@ -1,7 +1,43 @@
+<p-toast></p-toast>
+<p-confirmDialog #cd>
+  <ng-template pTemplate="headless" let-message>
+    <div
+      class="flex flex-column align-items-center p-5 surface-overlay border-round"
+    >
+      <div
+        class="border-circle bg-primary inline-flex justify-content-center align-items-center h-6rem w-6rem -mt-8"
+      >
+        <i class="pi pi-question text-5xl"></i>
+      </div>
+      <span class="font-bold text-2xl block mb-2 mt-4">{{
+        message.header
+      }}</span>
+      <p class="mb-0">{{ message.message }}</p>
+      <div class="flex align-items-center gap-2 mt-4">
+        <button
+          pButton
+          label="Save"
+          (click)="cd.accept()"
+          class="w-8rem"
+        ></button>
+        <button
+          pButton
+          label="Cancel"
+          (click)="cd.reject()"
+          class="p-button-outlined w-8rem"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-confirmDialog>
+
 <p-table
   #dt1
   [value]="users"
   dataKey="uid"
+  selectionMode="single"
+  [(selection)]="selectedUser"
+  dataKey
   styleClass="p-datatable-gridlines"
   [globalFilterFields]="['displayName', 'email', 'role']"
   [rowHover]="true"
@@ -14,33 +50,51 @@
 >
   <ng-template pTemplate="caption">
     <div class="flex justify-content-between flex-column sm:flex-row">
-      <button
-        pButton
-        label="Clear"
-        class="p-button-outlined mb-2"
-        icon="pi pi-filter-slash"
-        (click)="clear(dt1)"
-      ></button>
-      <span class="p-input-icon-left mb-2">
-        <i class="pi pi-search"></i>
-        <input
-          pInputText
-          type="text"
-          #filter
-          (input)="onGlobalFilter(dt1, $event)"
-          placeholder="Search by name, email or role"
-          class="w-full"
-        />
-      </span>
+      <div class="flex gap-3">
+        <button
+          pButton
+          label="Clear"
+          class="p-button-outlined mb-2"
+          icon="pi pi-filter-slash"
+          (click)="clear(dt1)"
+        ></button>
+        @if(selectedUser){
+        <p-button
+          label="Edit"
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-info"
+          severity="secondary"
+        ></p-button>
+        <p-button
+          (click)="deleteUser()"
+          label="Delete"
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-danger"
+          severity="danger"
+        ></p-button>
+        }
+      </div>
+      <div class="flex gap-3">
+        <p-button
+          label="Add"
+          icon="pi pi-plus"
+          class="p-button-rounded p-button-info"
+        ></p-button>
+
+        <span class="p-input-icon-left mb-2">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            #filter
+            (input)="onGlobalFilter(dt1, $event)"
+            placeholder="Search by name, email or role"
+            class="w-full"
+          />
+        </span>
+      </div>
     </div>
   </ng-template>
-
-  <!-- <ng-template pTemplate="caption">
-    <div class="flex align-items-center justify-content-between">
-      Users
-      <p-button label="Add" icon="pi pi-plus"></p-button>
-    </div>
-  </ng-template> -->
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="displayName">
@@ -50,11 +104,10 @@
       <th pSortableColumn="role">
         Role <p-sortIcon field="role"></p-sortIcon>
       </th>
-      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-user>
-    <tr>
+    <tr [pSelectableRow]="user">
       <td class="flex align-items-center">
         <p-avatar
           [image]="user.photoURL"
@@ -69,19 +122,9 @@
 
       <td>{{ user.email }}</td>
       <td>
-        {{ user.role }}
-      </td>
-      <td class="flex align-items-center gap-3">
-        <p-button
-          label="Edit"
-          icon="pi pi-pencil"
-          class="p-button-rounded p-button-info"
-        ></p-button>
-        <p-button
-          label="Delete"
-          icon="pi pi-trash"
-          class="p-button-rounded p-button-danger"
-        ></p-button>
+        <span [class]="'customer-badge status-' + user.role">
+          {{ user.role }}</span
+        >
       </td>
     </tr>
   </ng-template>
