@@ -1,27 +1,64 @@
-<div class="card flex justify-content-center">
-  <input type="text" pInputText formControlName="text" />
-</div>
+<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm.value)">
+  <div class="flex gap-3 m-2">
+    <input
+      pInputText
+      class="flex-grow-1"
+      type="text"
+      name="displayName"
+      [(ngModel)]="user.displayName"
+      placeholder="Display Name"
+      required
+    />
 
-<!-- <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-  <p-inputText formControlName="email" placeholder="Email"></p-inputText>
+    <input
+      pInputText
+      class="flex-grow-1"
+      type="text"
+      name="email"
+      [(ngModel)]="user.email"
+      placeholder="Email"
+      required
+      email
+    />
+
+    <p-dropdown
+      name="role"
+      [options]="roles"
+      [(ngModel)]="user.role"
+      placeholder="Role"
+      [ngClass]="{
+        'ng-dirty': !user.role,
+        'ng-invalid': !user.role
+      }"
+    ></p-dropdown>
+  </div>
 
   <p-fileUpload
-    formControlName="photoURL"
-    name="photoURL"
-    auto="auto"
+    #fileUpload
+    mode="advanced"
     chooseLabel="Select Photo"
+    name="photoURL"
+    accept="image/*"
+    [maxFileSize]="maxImageSize"
+    [showUploadButton]="false"
+    [showCancelButton]="false"
+    (onSelect)="onFileSelect($event)"
+    (onRemove)="onFileRemove($event)"
   ></p-fileUpload>
 
-  <p-inputText
-    formControlName="displayName"
-    placeholder="Display Name"
-  ></p-inputText>
+  <div class="flex gap-3 m-2 justify-content-center">
+    <p-button
+      type="reset"
+      [text]="true"
+      label="Discard"
+      severity="secondary"
+      (click)="resetForm()"
+    ></p-button>
 
-  <p-dropdown
-    formControlName="role"
-    [options]="roles"
-    placeholder="Select a Role"
-  ></p-dropdown>
-
-  <button pButton type="submit" label="Submit"></button>
-</form> -->
+    <p-button
+      type="submit"
+      label="Submit"
+      [disabled]="!userForm.valid || selectedFile == null"
+    ></p-button>
+  </div>
+</form>
