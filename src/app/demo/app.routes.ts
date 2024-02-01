@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AddUserComponent } from '../users/add-user/add-user.component';
 import { UsersListComponent } from '../users/users-list/users-list.component';
 import { EmptyComponent } from './empty/empty.component';
 import { TableDemoComponent } from './table/table-demo.component';
@@ -9,10 +8,6 @@ export const DEMO_ROUTES: Routes = [
   {
     path: 'auth',
     children: [
-      {
-        path: 'add-user',
-        component: AddUserComponent,
-      },
       {
         path: 'users-list',
         component: UsersListComponent,
